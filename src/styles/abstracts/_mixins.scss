@@ -1,6 +1,6 @@
 // OUR Z-INDEX SHOULD BE USED THIS WAY. SO WE DON'T HAVE DIFFERENT Z-INDEX FLYING AROUND
 // use @include z-index(fill-page); for example
-@use 'sass:math';
+@use "sass:math";
 
 $z-index: (
   max-index: 9999999999,
@@ -26,6 +26,26 @@ $z-index: (
 @mixin landscape-mode {
   @media screen and (orientation: landscape) {
     @content;
+  }
+}
+
+@mixin responsive($breakpoint) {
+  //mobile
+
+  @if $breakpoint==phone {
+    @media only screen and (max-width: 51.2494rem) {
+      @content;
+    }
+  }
+}
+
+@mixin responsiveMin($breakpoint) {
+  //desktop
+
+  @if $breakpoint==desktop {
+    @media only screen and (min-width: 51.25rem) {
+      @content;
+    }
   }
 }
 
