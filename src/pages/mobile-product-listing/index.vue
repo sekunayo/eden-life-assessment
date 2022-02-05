@@ -35,6 +35,11 @@ export default defineComponent({
   width: 100%;
   background-color: $col-white;
   padding: 20px 0px;
+  display: none;
+
+  @include responsive(phone) {
+    display: block;
+  }
 
   &__card-container {
     display: grid;

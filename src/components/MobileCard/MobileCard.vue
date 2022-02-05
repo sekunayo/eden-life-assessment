@@ -46,7 +46,7 @@ export default defineComponent({
     border-radius: 0px;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
-    
+
     &-footer {
       @include row;
       align-items: center;

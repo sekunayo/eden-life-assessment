@@ -36,7 +36,7 @@ export default defineComponent({
   font-size: 0.85rem;
   font-style: normal;
   font-weight: normal;
-  background-color: $col-grey-1 ;
+  background-color: $col-grey-1;
 
   &::placeholder {
     color: $col-dark-grey;
@@ -44,7 +44,7 @@ export default defineComponent({
   }
 
   &__form {
-    width: 17rem;
+    width: 80%;
     height: 3rem;
     padding-left: 1.25rem;
   }
