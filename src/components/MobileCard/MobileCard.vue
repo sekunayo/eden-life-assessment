@@ -27,12 +27,13 @@ export default defineComponent({
   height: auto;
   display: grid;
   grid-template-rows: 200px auto;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 
   &__image {
     height: 100%;
-    background-color: pink;
     border: 1px solid transparent;
     border-radius: 10px 10px 0px 0px;
+    background-color: $col-secondary-5;
   }
 
   &__text {
@@ -42,15 +43,17 @@ export default defineComponent({
     @include grid-row(3, auto);
     grid-row-gap: 5px;
     border: 1px solid transparent;
-    border-radius: 0px 0px 10px 10px;
-
+    border-radius: 0px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    
     &-footer {
       @include row;
       align-items: center;
     }
 
     &-price {
-      color: $col-primary-2;
+      color: $col-dark;
       font-size: 1.25rem;
       font-weight: 700;
       font-style: normal;
@@ -70,7 +73,7 @@ export default defineComponent({
     }
 
     &-title {
-      color: $col-primary-2;
+      color: $col-dark;
       font-size: 1.5rem;
       font-weight: 800;
       font-style: normal;
