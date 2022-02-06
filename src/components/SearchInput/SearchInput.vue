@@ -1,7 +1,7 @@
 <template>
-  <form class="mobileSearchInput__form">
+  <form class="searchInput__form">
     <input
-      class="mobileSearchInput"
+      class="searchInput"
       v-model="searchValue"
       type="text"
       placeholder="Search"
@@ -11,8 +11,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+
 export default defineComponent({
-  name: "MobileSearchInput",
+  name: "SearchInput",
   data() {
     return {
       searchValue: "",
@@ -25,18 +26,21 @@ export default defineComponent({
 @import "../../styles/abstracts/mixins";
 @import "../../styles/abstracts/variables";
 
-.mobileSearchInput {
+.searchInput {
   width: 100%;
   outline: 0px;
-  @include border-radius(20px);
   height: 100%;
   border: 1px solid transparent;
-  padding: 10px;
+  padding: 0px 30px;
   color: $col-black;
-  font-size: 0.85rem;
+  font-size: 1.2rem;
   font-style: normal;
   font-weight: normal;
   background-color: $col-grey-1;
+
+  @include responsive(phone) {
+    font-size: 0.85rem;
+  }
 
   &::placeholder {
     color: $col-dark-grey;
@@ -44,9 +48,8 @@ export default defineComponent({
   }
 
   &__form {
-    width: 80%;
-    height: 3rem;
-    padding-left: 1.25rem;
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

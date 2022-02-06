@@ -1,18 +1,15 @@
 <template>
-  <mobile-product-listing></mobile-product-listing>
-  <desktop-product-listing></desktop-product-listing>
+  <product-listing></product-listing>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import MobileProductListing from "./pages/mobile-product-listing/index.vue";
-import DesktopProductListing from "./pages/desktop-product-listing/index.vue";
+import ProductListing from "./pages/product-listing/index.vue";
 
 export default defineComponent({
   name: "App",
   components: {
-    DesktopProductListing,
-    MobileProductListing,
+    ProductListing,
   },
 });
 </script>
