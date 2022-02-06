@@ -1,6 +1,6 @@
 <template>
   <div class="productListing">
-    <div class="productListing__header"></div>
+    <product-header></product-header>
     <div class="productListing__hero">
       <div class="productListing__search">
         <div class="productListing__search-container">
@@ -15,11 +15,7 @@
           :key="index + 1"
           class="productListing__card"
         >
-          <img
-            class="productListing__card-image"
-            :src="eachImage"
-            alt="dog"
-          />
+          <img class="productListing__card-image" :src="eachImage" alt="dog" />
         </div>
       </div>
     </div>
@@ -29,12 +25,14 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import SearchInput from "../../components/SearchInput/SearchInput.vue";
+import ProductHeader from "../../components/Header/Header.vue";
 import axios from "axios";
 
 export default defineComponent({
   name: "ProductListing",
   components: {
     SearchInput,
+    ProductHeader,
   },
   data(): any {
     return {
@@ -50,11 +48,11 @@ export default defineComponent({
           return axios.get(`https://dog.ceo/api/breed/${element}/images`);
         });
         Promise.all(endpoints).then((response: any) => {
-          const array = response.map((element : any) => {
+          const array = response.map((element: any) => {
             return element.data.message;
           });
           const newArray = [].concat.apply([], array);
-          this.images = newArray.slice(0,100);
+          this.images = newArray.slice(0, 100);
         });
       });
     },
@@ -114,15 +112,6 @@ export default defineComponent({
         grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
       }
     }
-  }
-
-  &__header {
-    position: sticky;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    background-color: $col-white;
   }
 
   &__search {
