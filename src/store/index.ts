@@ -1,15 +1,18 @@
-import { createStore } from "vuex";
-import Vue from "vue";
 import breedsList from "./modules/breedsList";
+import Vue from 'vue'
+import Vuex from "vuex";
 
 interface StateProps {
   breedNames: string[];
-  searchList : string[];
+  searchList: string[];
+  imagesArray : string[];
+  loading : boolean;
+  endPoints : string[];
 }
 
 export type State = StateProps;
 
-export const store  = createStore({
+export const store = new Vuex.Store({
   state: {},
   mutations: {},
   actions: {},

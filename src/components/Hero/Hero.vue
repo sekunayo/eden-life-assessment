@@ -8,12 +8,11 @@
           Best place to find different breeds of dogs
         </p>
         <div class="hero__search-container">
-          <!-- <form class="searchInput__form" @submit.prevent="onSubmit"> -->
-            <form class="searchInput__form">
+          <form @submit.prevent="onSumbit" class="searchInput__form">
             <div class="searchInput__form-icon">
               <button
                 aria-label="search"
-                type="button"
+                type="submit"
                 @click="onSubmit"
                 class="searchInput__form-icon-button"
               >
@@ -32,7 +31,7 @@
           </form>
           <div v-if="searchValue" class="hero__search-container-results">
             <ul class="hero__search-container-results-list">
-              <li v-for="(string, index) in searchList" :key="index">
+              <li v-for="(string, index) in searchArray" :key="index">
                 {{ string }}
               </li>
             </ul>
@@ -50,28 +49,33 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { mapGetters, mapActions, mapState } from "vuex";
+import { mapGetters, mapActions, } from "vuex";
 
 export default defineComponent({
   name: "ProductHero",
   created: function () {
     window.addEventListener("keyup", () => {
-      this.search();
+      this.search(this.searchValue);
     });
     this.fetchBreedsList();
+    this.search(this.searchValue);
   },
   data() {
     return {
       onFocused: ref(),
-      searchValue : ""
+      searchValue: "",
     };
   },
   computed: {
-    ...mapState(["breedNames", "searchList"]),
     ...mapGetters(["allBreedsList", "searchArray"]),
   },
   methods: {
-    ...mapActions(["fetchBreedsList","search"]),
+    ...mapActions(["fetchBreedsList", "search", "fetchBreedsListByBreed"]),
+      onSubmit() {
+      this.fetchBreedsListByBreed(this.searchValue);
+      this.searchValue = "";
+    }
+
   },
 });
 </script>
@@ -84,6 +88,7 @@ export default defineComponent({
   height: calc(100vh - 100px);
   width: 100%;
   position: relative;
+  background-color: rgba(0,0,0,0.5);
 
   @include responsive(phone) {
     height: calc(80vh - 100px);

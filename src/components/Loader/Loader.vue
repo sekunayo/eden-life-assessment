@@ -52,7 +52,7 @@ export default defineComponent({
     transform: scale(0.9) translate(-50%, -50%);
     animation: blob-grow linear 3.4s infinite;
     border-radius: 50%;
-    box-shadow: 0 -10px 40px -5px $col-secondary-6;
+    // box-shadow: 0 -10px 40px -5px $col-secondary-6;
 
     @include responsiveMin(desktop) {
       width: 12rem;
