@@ -1,8 +1,19 @@
 import { createStore } from "vuex";
+import Vue from "vue";
+import breedsList from "./modules/breedsList";
 
-export default createStore({
+interface StateProps {
+  breedNames: string[];
+  searchList : string[];
+}
+
+export type State = StateProps;
+
+export const store  = createStore({
   state: {},
   mutations: {},
   actions: {},
-  modules: {},
+  modules: {
+    breedsList,
+  },
 });
