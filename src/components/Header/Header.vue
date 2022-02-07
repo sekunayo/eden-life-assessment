@@ -1,8 +1,6 @@
 <template>
   <header class="header">
-    <div class="header-icon">
-      <i class="fas fa-dog"></i>
-    </div>
+    <div class="header-icon">a</div>
   </header>
 </template>
 
@@ -22,11 +20,11 @@ export default defineComponent({
   top: 0;
   left: 0;
   width: 100%;
-  height: 70px;
+  height: 1.55rem;
   background-color: $col-white;
 
   @include responsiveMin(desktop) {
-    height: 100px;
+    height: 3.33333rem;
   }
 
   &-icon {
@@ -39,7 +37,7 @@ export default defineComponent({
     @include responsiveMin(desktop) {
       padding-left: 20px;
     }
-    
+
     & i {
       font-size: 3rem;
       color: $col-secondary-6;
