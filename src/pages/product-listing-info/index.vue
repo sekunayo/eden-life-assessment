@@ -90,6 +90,11 @@ export default defineComponent({
   width: 100%;
   background-color: $col-grey-2;
 
+  @include responsive(phone) {
+    min-height: 100vh;
+    height: 100%;
+  }
+
   &__button {
     padding: 10px 40px;
     border: 1px solid $col-secondary-6;
@@ -197,11 +202,22 @@ export default defineComponent({
     height: calc(100vh - 55px);
     @include flex-row;
 
+    @include responsive(phone) {
+      min-height: 100vh;
+      height: 100%;
+    }
+
     &-container {
       padding: 20px 0px;
       height: auto;
       background-color: $col-white;
       width: 80%;
+
+      @include responsive(phone) {
+        min-height: 100vh;
+        height: 100%;
+        margin: 50px 0px;
+      }
     }
   }
 }
