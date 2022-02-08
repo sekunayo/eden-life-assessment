@@ -37,16 +37,6 @@
                     Back to home
                   </button>
                 </div>
-                <div class="productInfo__description-info-breeds-container">
-                  <h1 class="productInfo__description-info-breeds-heading">
-                    Similar Breeds
-                  </h1>
-                  <div
-                    class="productInfo__description-info-breeds-container-inner"
-                  >
-                    <div class="productInfo__description-info-breeds"></div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -57,9 +47,11 @@
 </template>
 
 <script lang="ts">
+import router from "@/router";
+import { store } from "@/store";
 import { defineComponent } from "vue";
+import { mapActions } from "vuex";
 import ProductHeader from "../../components/Header/Header.vue";
-import { mapGetters } from "vuex";
 
 export default defineComponent({
   name: "ProductInfo",
@@ -70,9 +62,12 @@ export default defineComponent({
     return {
       breedName: "",
       image: "",
+      eachImage: "",
+      index: "",
     };
   },
   methods: {
+    ...mapActions(["fetchAllBreedsImages"]),
     goBack() {
       this.$router.go(-1);
     },
@@ -125,50 +120,6 @@ export default defineComponent({
         grid-template-rows: repeat(2, auto);
       }
 
-      &-breeds {
-        width: 100%;
-        height: 70px;
-
-        &-image {
-          width: 100%;
-          height: 100%;
-          background-color: #dddbdd;
-
-          &-inner {
-            width: 100%;
-            height: 100%;
-            background-color: #dddbdd;
-
-            &[lazy="loaded"] {
-              max-width: 100%;
-              height: 100%;
-              object-fit: cover;
-            }
-          }
-        }
-
-        &-heading {
-          margin-bottom: 15px;
-          font-size: 1.5rem;
-          font-style: normal;
-          font-weight: 600;
-          color: $col-black;
-        }
-        &-container {
-          @include column;
-          padding-bottom: 40px;
-
-          @include responsive(phone) {
-            margin-top: 50px;
-          }
-
-          &-inner {
-            @include grid-column(3, 1fr);
-            grid-column-gap: 15px;
-          }
-        }
-      }
-
       &-text {
         @include column;
         @include responsiveMin(desktop) {
@@ -219,12 +170,12 @@ export default defineComponent({
 
       &-image {
         width: 100%;
-        height: 100%;
+        height: 450px;
 
         &-inner {
           width: 100%;
           height: 100%;
-          background-color: #dddbdd;
+          background-color: $col-grey-4;
 
           &[lazy="loaded"] {
             max-width: 100%;

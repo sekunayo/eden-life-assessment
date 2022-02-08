@@ -1,16 +1,16 @@
 <template>
   <div class="error">
-      <div class="error-container">
-        <h1 class="error-container-text">hkkkkkkkkkkkkkkkkkk</h1>
-        <button
-          aria-label="close-error"
-          @click="closeError(error)"
-          type="button"
-          class="error-container-icon"
-        >
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
+    <div class="error-container">
+      <h1 class="error-container-text">hkkkkkkkkkkkkkkkkkk</h1>
+      <button
+        aria-label="close-error"
+        @click="closeError(error)"
+        type="button"
+        class="error-container-icon"
+      >
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -30,7 +30,7 @@ export default defineComponent({
   },
   methods: {
     closeError() {
-      store.commit("setError",false);
+      store.commit("setError", false);
     },
   },
 });

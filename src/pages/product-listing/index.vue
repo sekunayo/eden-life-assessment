@@ -24,13 +24,13 @@
         </button>
       </div>
     </div>
-    <div class="productListing__pagination">
+    <!-- <div class="productListing__pagination">
       <pagination
-        v-model="page"
+        v-model="page.page"
         :records="imagesArray.length"
         :per-page="100"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -39,7 +39,7 @@ import { defineComponent } from "vue";
 import ProductHeader from "../../components/Header/Header.vue";
 import ProductHero from "../../components/Hero/Hero.vue";
 import { mapGetters } from "vuex";
-import Pagination from "v-pagination-3";
+// import Pagination from "v-pagination-3";
 import router from "@/router";
 import ErrorComponent from "../../components/Error/Error.vue";
 
@@ -48,12 +48,10 @@ export default defineComponent({
   components: {
     ProductHeader,
     ProductHero,
-    Pagination,
     ErrorComponent,
   },
   data() {
     return {
-      page: 1,
       breedName: "",
       image: "",
     };
@@ -63,6 +61,7 @@ export default defineComponent({
   },
   methods: {
     navigateToProductInfo(eachImage, breedNames) {
+      this.$emit("eachImage", eachImage);
       breedNames.map((element) => {
         if (eachImage.includes(element)) {
           localStorage.breedName = element;
@@ -101,12 +100,18 @@ export default defineComponent({
     &-image {
       width: 100%;
       height: 350px;
-      background-color: #dddbdd;
+      background-color: $col-grey-4;
 
       &[lazy="loaded"] {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        transform: scale(1);
+        transition: transform 1s ease-in-out;
+        &:hover {
+          transform: scale(0.95);
+          filter: grayscale(80%);
+        }
       }
     }
   }

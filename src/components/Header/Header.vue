@@ -38,15 +38,15 @@ export default defineComponent({
     height: 100%;
     width: 100%;
 
-   &-text{
-     color: $col-secondary-6;
-     font-size: 2rem;
-     font-style: normal;
-     font-weight: 900;
-     @include responsive(phone){
-       font-size: 1.2rem;
-     }
-   }
+    &-text {
+      color: $col-secondary-6;
+      font-size: 2rem;
+      font-style: normal;
+      font-weight: 900;
+      @include responsive(phone) {
+        font-size: 1.2rem;
+      }
+    }
   }
 }
 </style>

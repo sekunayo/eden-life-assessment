@@ -1,31 +1,33 @@
 import NotFound from "../components/NotFound/NotFound.vue";
-import { createRouter,createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from "vue-router";
+import { store } from "@/store";
 
-const ProductInfo = () => import('../pages/product-listing-info/index.vue')
-const ProductListing = () => import('../pages/product-listing/index.vue')
-
+const ProductInfo = () => import("../pages/product-listing-info/index.vue");
+const ProductListing = () => import("../pages/product-listing/index.vue");
 
 const routes = [
   {
-    path: '/',
-    name: 'dog',
-    component: ProductListing
+    path: "/",
+    name: "dog",
+    component: ProductListing,
   },
   {
-    path: '/dog/:name',
-    name: 'dogInfo',
-    component: ProductInfo
+    path: "/dog/:name",
+    name: "dogInfo",
+    component: ProductInfo,
   },
   {
-    path: '/:pathMatch(.*)',
-    component: NotFound, 
+    path: "/:pathMatch(.*)",
+    component: NotFound,
   },
-
-]
+];
 const router = createRouter({
-    history: createWebHistory(),
-    routes,
-})
-  
+  history: createWebHistory(),
+  routes,
+});
 
-export default router
+router.afterEach((to, from, next) => {
+  store.commit("setLoading", false);
+});
+
+export default router;

@@ -1,6 +1,6 @@
 <template>
-  <!-- <loader></loader> -->
-  <router-view />
+  <loader v-if="loading"></loader>
+  <router-view v-else></router-view>
 </template>
 
 <script lang="ts">
@@ -10,11 +10,17 @@ import Loader from "../src/components/Loader/Loader.vue";
 
 export default defineComponent({
   name: "App",
-  // components: {
-  // Loader,
-  // },
+  components: {
+    Loader,
+  },
+  data() {
+    return {
+      images: [],
+    };
+  },
+
   computed: {
-    ...mapGetters(["loading"]),
+    ...mapGetters(["loading", "imagesArray"]),
   },
   methods: {
     ...mapActions(["fetchAllBreedsImages"]),
@@ -22,14 +28,9 @@ export default defineComponent({
   created() {
     this.fetchAllBreedsImages();
   },
-  // beforeRouteEnter(to, from, next) {
-  //   const loading = JSON.parse(JSON.stringify(store.state)).breedsList.loading;
-  //   if (loading) {
-  //     return loading;
-  //   }
-
-  //   store.commit("setLoading", false);
-  // },
+  mounted() {
+    this.images = localStorage.images;
+  },
 });
 </script>
 
