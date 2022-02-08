@@ -5,16 +5,25 @@
     <div class="productListing__card-container">
       <div class="productListing__card-container-inner">
         <div
-          v-for="(eachImage, index) in images"
+          v-for="(eachImage, index) in imagesArray"
           :key="index + 1"
           class="productListing__card"
         >
-          <div class="shimmer__card" v-if="loading">
-            <div class="shimmer"></div>
-          </div>
-          <img class="productListing__card-image" :src="eachImage" alt="dog" />
+          <img
+            class="productListing__card-image"
+            lazy="loaded"
+            v-lazy="eachImage"
+            alt="dog"
+          />
         </div>
       </div>
+    </div>
+    <div class="productListing__pagination">
+      <pagination
+        v-model="page"
+        :records="imagesArray.length"
+        :per-page="100"
+      />
     </div>
   </div>
 </template>
@@ -23,40 +32,23 @@
 import { defineComponent } from "vue";
 import ProductHeader from "../../components/Header/Header.vue";
 import ProductHero from "../../components/Hero/Hero.vue";
-import axios from "axios";
+import { mapGetters } from "vuex";
+import Pagination from "v-pagination-3";
 
 export default defineComponent({
   name: "ProductListing",
   components: {
     ProductHeader,
     ProductHero,
+    Pagination,
   },
-  data(): any {
+  data() {
     return {
-      images: null,
-      loading: true,
+      page: 1,
     };
   },
-  methods: {
-    getImages: function () {
-      axios.get("https://dog.ceo/api/breeds/list/all").then((response) => {
-        const array = Object.keys(response.data.message);
-        const newArray = array.slice(0, 100);
-        const endpoints = newArray.map((element) => {
-          return axios.get(`https://dog.ceo/api/breed/${element}/images`);
-        });
-        Promise.all(endpoints).then((response: any) => {
-          const array = response.map((element: any) => {
-            return element.data.message;
-          });
-          this.images = [].concat.apply([], array);
-          this.loading = false;
-        });
-      });
-    },
-  },
-  mounted() {
-    // this.getImages();
+  computed: {
+    ...mapGetters(["imagesArray", "loading", "breedNames"]),
   },
 });
 </script>
@@ -65,53 +57,25 @@ export default defineComponent({
 @import "../../styles/abstracts/variables.scss";
 @import "../../styles/abstracts/mixins.scss";
 
-.shimmer {
-  &__card {
-    max-width: 100%;
-    position: relative;
-    height: 300px;
-    background-color: #dddbdd;
-  }
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow-x: hidden;
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: -100%;
-    bottom: 0;
-    left: -100%;
-    background-image: linear-gradient(
-      to right,
-      rgba(white, 0) 33.3%,
-      rgba(white, 0.8),
-      rgba(white, 0) 66.6%
-    );
-    animation: shimmer 1s infinite linear;
-  }
-}
-
-@keyframes shimmer {
-  from {
-    transform: translateX(-33.3%);
-  }
-  to {
-    transform: translateX(33.3%);
-  }
-}
-
 .productListing {
   min-height: 100vh;
   width: 100%;
   background-color: $col-white;
+  position: relative;
+  @include column;
   // display: none;
   // @include responsiveMin(desktop) {
   //   display: block;
   // }
+
+  &__pagination {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: auto;
+    // @include flex-row;
+  }
 
   &__card {
     width: 100%;
@@ -119,8 +83,14 @@ export default defineComponent({
 
     &-image {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: 350px;
+      background-color: #dddbdd;
+
+      &[lazy="loaded"] {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
   }
 
@@ -165,19 +135,6 @@ export default defineComponent({
       @include responsive(phone) {
         width: 80%;
       }
-    }
-  }
-
-  &__hero {
-    // background-color: $col-secondary-5;
-    height: calc(100vh - 100px);
-    width: 100%;
-    position: relative;
-
-    & img {
-      min-width: 100%;
-      height: 100%;
-      object-fit: cover;
     }
   }
 }
