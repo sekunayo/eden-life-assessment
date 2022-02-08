@@ -1,13 +1,19 @@
 <template>
   <div class="productListing">
+    <transition name="fade" mode="out-in">
+      <error-component v-if="errorStats"></error-component>
+    </transition>
     <product-header></product-header>
     <product-hero></product-hero>
     <div class="productListing__card-container">
       <div class="productListing__card-container-inner">
-        <div
+        <button
+          type="button"
+          aria-label="productListing-card"
           v-for="(eachImage, index) in imagesArray"
           :key="index + 1"
           class="productListing__card"
+          @click="navigateToProductInfo(eachImage, breedNames)"
         >
           <img
             class="productListing__card-image"
@@ -15,7 +21,7 @@
             v-lazy="eachImage"
             alt="dog"
           />
-        </div>
+        </button>
       </div>
     </div>
     <div class="productListing__pagination">
@@ -34,6 +40,8 @@ import ProductHeader from "../../components/Header/Header.vue";
 import ProductHero from "../../components/Hero/Hero.vue";
 import { mapGetters } from "vuex";
 import Pagination from "v-pagination-3";
+import router from "@/router";
+import ErrorComponent from "../../components/Error/Error.vue";
 
 export default defineComponent({
   name: "ProductListing",
@@ -41,14 +49,28 @@ export default defineComponent({
     ProductHeader,
     ProductHero,
     Pagination,
+    ErrorComponent,
   },
   data() {
     return {
       page: 1,
+      breedName: "",
+      image: "",
     };
   },
   computed: {
-    ...mapGetters(["imagesArray", "loading", "breedNames"]),
+    ...mapGetters(["imagesArray", "errorStats", "loading", "breedNames"]),
+  },
+  methods: {
+    navigateToProductInfo(eachImage, breedNames) {
+      breedNames.map((element) => {
+        if (eachImage.includes(element)) {
+          localStorage.breedName = element;
+          localStorage.image = eachImage;
+          router.push(`/dog/${element}`);
+        }
+      });
+    },
   },
 });
 </script>
@@ -63,10 +85,6 @@ export default defineComponent({
   background-color: $col-white;
   position: relative;
   @include column;
-  // display: none;
-  // @include responsiveMin(desktop) {
-  //   display: block;
-  // }
 
   &__pagination {
     position: absolute;
@@ -74,7 +92,6 @@ export default defineComponent({
     left: 0;
     width: 100%;
     height: auto;
-    // @include flex-row;
   }
 
   &__card {

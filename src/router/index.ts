@@ -1,10 +1,9 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import Loader from "../components/Loader/Loader.vue";
+import NotFound from "../components/NotFound/NotFound.vue";
+import { createRouter,createWebHistory } from 'vue-router'
 
-import { createRouter,createWebHashHistory } from 'vue-router'
-import ProductListing from '../pages/product-listing/index.vue';
-import { store } from "@/store";
+const ProductInfo = () => import('../pages/product-listing-info/index.vue')
+const ProductListing = () => import('../pages/product-listing/index.vue')
+
 
 const routes = [
   {
@@ -12,10 +11,20 @@ const routes = [
     name: 'dog',
     component: ProductListing
   },
+  {
+    path: '/dog/:name',
+    name: 'dogInfo',
+    component: ProductInfo
+  },
+  {
+    path: '/:pathMatch(.*)',
+    component: NotFound, 
+  },
+
 ]
 const router = createRouter({
-    history: createWebHashHistory(),
-    routes
+    history: createWebHistory(),
+    routes,
 })
   
 

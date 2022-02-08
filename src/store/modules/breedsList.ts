@@ -7,6 +7,8 @@ const state: State = {
   imagesArray: [],
   loading: true,
   endPoints: [],
+  errorStats: false,
+  errorMessage: [],
 };
 
 const getters = {
@@ -15,6 +17,7 @@ const getters = {
   imagesArray: (state: any) => state.imagesArray,
   loading: (state: any) => state.loading,
   breedNames: (state: any) => state.breedNames,
+  errorStats: (state: any) => state.errorStats,
 };
 
 const actions = {
@@ -24,7 +27,7 @@ const actions = {
       commit("setBreedsList", response.data.message);
       return response;
     } catch (err) {
-      console.log(err);
+      commit("setError", true);
     }
   },
 
@@ -36,7 +39,9 @@ const actions = {
       commit("setImagesArray", response.data.message);
       commit("setLoading", false);
     } catch (err) {
+      commit("setError", true);
       console.log(err);
+      //  commit("setErrorMessage", err.message);
     }
   },
 
@@ -53,7 +58,7 @@ const actions = {
         return response;
       });
     } catch (err) {
-      console.log(err);
+      commit("setError", true);
     }
   },
 
@@ -63,6 +68,13 @@ const actions = {
 };
 
 const mutations = {
+  setError: (state: any, error: any) => {
+    state.errorStats = error;
+  },
+  setErrorMessage: (state: any, errorMessage: any) => {
+    state.errorMessage = errorMessage;
+  },
+
   setBreedsList: (state: any, breedNames: any) =>
     (state.breedNames = Object.keys(breedNames)),
 

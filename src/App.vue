@@ -1,21 +1,18 @@
 <template>
-  <loader v-if="loading"></loader>
-  <product-listing v-else></product-listing>
+  <!-- <loader></loader> -->
+  <router-view />
 </template>
 
 <script lang="ts">
-import { defineComponent} from "vue";
-import ProductListing from "./pages/product-listing/index.vue";
-import { mapActions, mapGetters, useStore } from "vuex";
+import { defineComponent } from "vue";
+import { mapActions, mapGetters } from "vuex";
 import Loader from "../src/components/Loader/Loader.vue";
-import { store } from "@/store";
 
 export default defineComponent({
   name: "App",
-  components: {
-    ProductListing,
-    Loader,
-  },
+  // components: {
+  // Loader,
+  // },
   computed: {
     ...mapGetters(["loading"]),
   },

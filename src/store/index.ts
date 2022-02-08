@@ -1,13 +1,15 @@
 import breedsList from "./modules/breedsList";
-import Vue from 'vue'
+import Vue from "vue";
 import Vuex from "vuex";
 
 interface StateProps {
   breedNames: string[];
   searchList: string[];
-  imagesArray : string[];
-  loading : boolean;
-  endPoints : string[];
+  imagesArray: string[];
+  loading: boolean;
+  endPoints: string[];
+  errorStats: boolean;
+  errorMessage: string[];
 }
 
 export type State = StateProps;
