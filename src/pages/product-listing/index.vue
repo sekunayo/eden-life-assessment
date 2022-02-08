@@ -26,7 +26,7 @@
     </div>
     <!-- <div class="productListing__pagination">
       <pagination
-        v-model="page.page"
+        v-model="page"
         :records="imagesArray.length"
         :per-page="100"
       />
@@ -39,7 +39,7 @@ import { defineComponent } from "vue";
 import ProductHeader from "../../components/Header/Header.vue";
 import ProductHero from "../../components/Hero/Hero.vue";
 import { mapGetters } from "vuex";
-// import Pagination from "v-pagination-3";
+import Pagination from "v-pagination-3";
 import router from "@/router";
 import ErrorComponent from "../../components/Error/Error.vue";
 
@@ -49,11 +49,13 @@ export default defineComponent({
     ProductHeader,
     ProductHero,
     ErrorComponent,
+    Pagination
   },
   data() {
     return {
       breedName: "",
       image: "",
+      // page : 1,
     };
   },
   computed: {
