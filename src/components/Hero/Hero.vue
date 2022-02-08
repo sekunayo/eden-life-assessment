@@ -74,7 +74,7 @@ export default defineComponent({
   methods: {
     ...mapActions(["fetchBreedsList", "search", "fetchBreedsListByBreed"]),
     onSubmit() {
-      this.fetchBreedsListByBreed(this.searchValue);
+      this.fetchBreedsListByBreed(this.searchValue.toLowerCase());
       this.searchValue = "";
     },
   },
