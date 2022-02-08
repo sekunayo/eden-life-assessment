@@ -26,7 +26,7 @@
     </div>
     <!-- <div class="productListing__pagination">
       <pagination
-        v-model="page.page"
+        v-model="page"
         :records="imagesArray.length"
         :per-page="100"
       />
@@ -49,11 +49,13 @@ export default defineComponent({
     ProductHeader,
     ProductHero,
     ErrorComponent,
+    // Pagination
   },
   data() {
     return {
       breedName: "",
       image: "",
+      // page : 1,
     };
   },
   computed: {

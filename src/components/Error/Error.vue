@@ -1,7 +1,7 @@
 <template>
   <div class="error">
     <div class="error-container">
-      <h1 class="error-container-text">hkkkkkkkkkkkkkkkkkk</h1>
+      <h1 class="error-container-text">This is not a valid breed name</h1>
       <button
         aria-label="close-error"
         @click="closeError(error)"
@@ -17,16 +17,15 @@
 <script lang="ts">
 import { store } from "@/store";
 import { defineComponent } from "vue";
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 export default defineComponent({
   name: "ErrorComponent",
   data() {
     return {
-      text: "",
-    };
+      text: "",    };
   },
   computed: {
-    ...mapGetters(["errorStats"]),
+    ...mapGetters(["errorStats",]),
   },
   methods: {
     closeError() {
@@ -60,7 +59,7 @@ export default defineComponent({
     align-items: center;
 
     &-icon {
-      width: 100%;
+      width: 20px;
       height: 100%;
       @include flex-row;
       margin-left: 20px;
@@ -75,6 +74,7 @@ export default defineComponent({
       font-size: 1rem;
       font-style: normal;
       font-weight: 600;
+      width: fit-content;
     }
   }
 }

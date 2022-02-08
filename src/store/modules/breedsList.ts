@@ -18,6 +18,7 @@ const getters = {
   loading: (state) => state.loading,
   breedNames: (state) => state.breedNames,
   errorStats: (state) => state.errorStats,
+  errorMessage: (state) => state.err
 };
 
 const actions = {
@@ -39,8 +40,7 @@ const actions = {
       commit("setImagesArray", response.data.message);
     } catch (err) {
       commit("setError", true);
-      console.log(err);
-      commit("setErrorMessage", [`${err.message}`]);
+      commit("setErrorMessage", err);
     }
   },
 
