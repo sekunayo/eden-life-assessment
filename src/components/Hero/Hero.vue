@@ -32,7 +32,11 @@
           <div v-if="searchValue" class="hero__search-container-results">
             <transition name="slide-fade">
               <ul class="hero__search-container-results-lists">
-                <li v-for="(string, index) in searchArray" :key="index">
+                <li
+                  @click="onClick(string)"
+                  v-for="(string, index) in searchArray"
+                  :key="index"
+                >
                   {{ string }}
                 </li>
               </ul>
@@ -75,6 +79,10 @@ export default defineComponent({
     ...mapActions(["fetchBreedsList", "search", "fetchBreedsListByBreed"]),
     onSubmit() {
       this.fetchBreedsListByBreed(this.searchValue.toLowerCase());
+      this.searchValue = "";
+    },
+    onClick(value) {
+      this.fetchBreedsListByBreed(value.toLowerCase());
       this.searchValue = "";
     },
   },
