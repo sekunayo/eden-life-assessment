@@ -7,14 +7,17 @@ const state: State = {
   imagesArray: [],
   loading: true,
   endPoints: [],
+  errorStats: false,
+  errorMessage: [],
 };
 
 const getters = {
-  allBreedsList: (state: any) => state.breedsList,
-  searchArray: (state: any) => state.searchList,
-  imagesArray: (state: any) => state.imagesArray,
-  loading: (state: any) => state.loading,
-  breedNames: (state: any) => state.breedNames,
+  allBreedsList: (state) => state.breedsList,
+  searchArray: (state) => state.searchList,
+  imagesArray: (state) => state.imagesArray,
+  loading: (state) => state.loading,
+  breedNames: (state) => state.breedNames,
+  errorStats: (state) => state.errorStats,
 };
 
 const actions = {
@@ -24,7 +27,7 @@ const actions = {
       commit("setBreedsList", response.data.message);
       return response;
     } catch (err) {
-      console.log(err);
+      commit("setError", true);
     }
   },
 
@@ -34,9 +37,10 @@ const actions = {
         `https://dog.ceo/api/breed/${breedName}/images`
       );
       commit("setImagesArray", response.data.message);
-      commit("setLoading", false);
     } catch (err) {
+      commit("setError", true);
       console.log(err);
+      commit("setErrorMessage", [`${err.message}`]);
     }
   },
 
@@ -44,7 +48,6 @@ const actions = {
     try {
       const response = await dispatch("fetchBreedsList");
       commit("setEndPoints", Object.keys(response.data.message));
-      commit("setLoading", false);
       commit("getUrl", (url) => {
         const response = axios.get(url).then((response) => {
           return response.data.message;
@@ -53,7 +56,7 @@ const actions = {
         return response;
       });
     } catch (err) {
-      console.log(err);
+      commit("setError", true);
     }
   },
 
@@ -63,15 +66,23 @@ const actions = {
 };
 
 const mutations = {
-  setBreedsList: (state: any, breedNames: any) =>
+  setError: (state: State, error: boolean) => {
+    state.errorStats = error;
+  },
+  setErrorMessage: (state: State, errorMessage: string[]) => {
+    state.errorMessage = errorMessage;
+  },
+
+  setBreedsList: (state: State, breedNames: string[]) =>
     (state.breedNames = Object.keys(breedNames)),
 
-  setImagesArray: (state: any, imagesArray: any) =>
-    (state.imagesArray = imagesArray),
+  setImagesArray: (state: State, imagesArray: string[]) => {
+    state.imagesArray = imagesArray;
+  },
 
-  setLoading: (state: any, loading: any) => (state.loading = loading),
+  setLoading: (state: State, loading: boolean) => (state.loading = loading),
 
-  setEndPoints: (state: any, breedNames) => {
+  setEndPoints: (state: State, breedNames) => {
     const endpoints = breedNames.map((element) => {
       return `https://dog.ceo/api/breed/${element}/images`;
     });
@@ -82,14 +93,18 @@ const mutations = {
     Promise.all(
       state.endPoints.map((url) => {
         action(url).then((response) => {
-          const newImagesArray: any = [].concat(...response);
-          state.imagesArray = newImagesArray;
+          const newImagesArray: string[] = [].concat(...response);
+          localStorage.setItem("images", JSON.stringify(newImagesArray));
+          const data = localStorage.getItem("images");
+          if (data) {
+            state.imagesArray = JSON.parse(data);
+          }
         });
       })
     );
   },
 
-  setSearchList: (state: any, searchValue: any) => {
+  setSearchList: (state: State, searchValue: string) => {
     const searchString = searchValue.toLowerCase();
     const filteredCharacters = state.breedNames.filter((letter: string) =>
       letter.toLowerCase().includes(searchString)

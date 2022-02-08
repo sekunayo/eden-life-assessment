@@ -30,11 +30,13 @@
             />
           </form>
           <div v-if="searchValue" class="hero__search-container-results">
-            <ul class="hero__search-container-results-list">
-              <li v-for="(string, index) in searchArray" :key="index">
-                {{ string }}
-              </li>
-            </ul>
+            <transition name="slide-fade">
+              <ul class="hero__search-container-results-lists">
+                <li v-for="(string, index) in searchArray" :key="index">
+                  {{ string }}
+                </li>
+              </ul>
+            </transition>
           </div>
         </div>
         <p class="hero__description-caption">
@@ -49,7 +51,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { mapGetters, mapActions, } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default defineComponent({
   name: "ProductHero",
@@ -71,11 +73,10 @@ export default defineComponent({
   },
   methods: {
     ...mapActions(["fetchBreedsList", "search", "fetchBreedsListByBreed"]),
-      onSubmit() {
+    onSubmit() {
       this.fetchBreedsListByBreed(this.searchValue);
       this.searchValue = "";
-    }
-
+    },
   },
 });
 </script>
@@ -88,7 +89,7 @@ export default defineComponent({
   height: calc(100vh - 100px);
   width: 100%;
   position: relative;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
 
   @include responsive(phone) {
     height: calc(80vh - 100px);
@@ -156,7 +157,7 @@ export default defineComponent({
 
       &-results {
         width: 100%;
-        background-color: #f5f5f5;
+        background-color: $col-grey-3;
         height: auto;
         padding: 20px;
         @include border-radius(4px);
@@ -169,6 +170,11 @@ export default defineComponent({
         &-lists {
           @include grid-row(auto-fit, auto);
           grid-row-gap: 10px;
+
+          & li:hover {
+            color: $col-secondary-6;
+            cursor: pointer;
+          }
         }
       }
     }
@@ -199,7 +205,7 @@ export default defineComponent({
     width: 100%;
     height: 100%;
     @include row;
-    background-color: #f5f5f5;
+    background-color: $col-grey-3;
     border: 1px solid transparent;
     @include border-radius(4px);
     padding: 0px 14px;

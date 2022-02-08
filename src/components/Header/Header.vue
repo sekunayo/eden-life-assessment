@@ -1,6 +1,8 @@
 <template>
   <header class="header">
-    <div class="header-icon">a</div>
+    <div class="header-icon">
+      <h1 class="header-icon-text">Puppyes</h1>
+    </div>
   </header>
 </template>
 
@@ -20,11 +22,13 @@ export default defineComponent({
   top: 0;
   left: 0;
   width: 100%;
-  height: 1.55rem;
+  height: auto;
+  padding: 5px 0px;
   background-color: $col-white;
 
   @include responsiveMin(desktop) {
     height: 3.33333rem;
+    padding: 0px;
   }
 
   &-icon {
@@ -34,16 +38,13 @@ export default defineComponent({
     height: 100%;
     width: 100%;
 
-    @include responsiveMin(desktop) {
-      padding-left: 20px;
-    }
-
-    & i {
-      font-size: 3rem;
+    &-text {
       color: $col-secondary-6;
-
-      @include responsiveMin(desktop) {
-        font-size: 4rem;
+      font-size: 2rem;
+      font-style: normal;
+      font-weight: 900;
+      @include responsive(phone) {
+        font-size: 1.2rem;
       }
     }
   }

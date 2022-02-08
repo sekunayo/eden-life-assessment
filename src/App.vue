@@ -1,23 +1,26 @@
 <template>
   <loader v-if="loading"></loader>
-  <product-listing v-else></product-listing>
+  <router-view v-else></router-view>
 </template>
 
 <script lang="ts">
-import { defineComponent} from "vue";
-import ProductListing from "./pages/product-listing/index.vue";
-import { mapActions, mapGetters, useStore } from "vuex";
+import { defineComponent } from "vue";
+import { mapActions, mapGetters } from "vuex";
 import Loader from "../src/components/Loader/Loader.vue";
-import { store } from "@/store";
 
 export default defineComponent({
   name: "App",
   components: {
-    ProductListing,
     Loader,
   },
+  data() {
+    return {
+      images: [],
+    };
+  },
+
   computed: {
-    ...mapGetters(["loading"]),
+    ...mapGetters(["loading", "imagesArray"]),
   },
   methods: {
     ...mapActions(["fetchAllBreedsImages"]),
@@ -25,14 +28,9 @@ export default defineComponent({
   created() {
     this.fetchAllBreedsImages();
   },
-  // beforeRouteEnter(to, from, next) {
-  //   const loading = JSON.parse(JSON.stringify(store.state)).breedsList.loading;
-  //   if (loading) {
-  //     return loading;
-  //   }
-
-  //   store.commit("setLoading", false);
-  // },
+  mounted() {
+    this.images = localStorage.images;
+  },
 });
 </script>
 
